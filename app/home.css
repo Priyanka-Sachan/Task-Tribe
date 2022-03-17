@@ -1,1 +1,9 @@
 /* Add styles here to customize the appearance of your app */
+
+body {
+    font-size: 20px;
+}
+
+img.status {
+    width: 20px;
+}

@@ -1,41 +1,39 @@
-let toDoList = [{
-        'id': 1233,
-        'status': 0,
-        'title': 'Buy choclolate'
-    },
-    {
-        'id': 1283,
-        'status': 2,
-        'title': 'Buy milk'
-    },
-    {
-        'id': 1237,
-        'status': 1,
-        'title': 'Study load'
-    },
-    {
-        'id': 1288,
-        'status': 0,
-        'title': 'Buy toffee'
-    },
-    {
-        'id': 1265,
-        'status': 3,
-        'title': 'Buy 000'
-    },
-];
+let toDoList = [];
 
 const toDoListWidget = document.getElementById('to-do-list');
+const toDoInput = document.getElementById('to-do-input');
+const addToDo = document.getElementById('add-to-do');
+
+function getToDos() {
+    toDoList = JSON.parse(localStorage.getItem('to-dos')) || [];
+    toDoList.forEach((toDo) => {
+        addToDoToList(toDo);
+    });
+}
+
+function saveToDos() {
+    localStorage.setItem('to-dos', JSON.stringify(toDoList));
+}
 
 function addToDoToList(toDo) {
     const toDoWidget = document.createElement('div');
+    toDoWidget.id = toDo.id;
     toDoWidget.classList.add(['to-do']);
 
-    const statusWidget = document.createElement('span');
+    const statusWidget = document.createElement('img');
     statusWidget.classList.add(['status']);
-    statusWidget.innerHTML = toDo.status;
+    statusWidget.src = `../assets/icons/circle-${toDo.status}.svg`;
     statusWidget.addEventListener('click', (e) => {
-        e.target.innerHTML = (parseInt(e.target.innerHTML) + 1) % 5;
+        const id = toDo.id;
+        const index = toDoList.findIndex((td) => td.id == id);
+        if (index != -1) {
+            const updatedStatus = (toDoList[index].status + 1) % 7;
+            if (index != -1) {
+                toDoList[index].status = updatedStatus;
+                statusWidget.src = `../assets/icons/circle-${updatedStatus}.svg`;
+                saveToDos();
+            }
+        }
     });
     toDoWidget.appendChild(statusWidget);
 
@@ -47,13 +45,6 @@ function addToDoToList(toDo) {
     toDoListWidget.appendChild(toDoWidget);
 }
 
-toDoList.forEach((toDo) => {
-    addToDoToList(toDo);
-});
-
-const toDoInput = document.getElementById('to-do-input');
-const addToDo = document.getElementById('add-to-do');
-
 addToDo.addEventListener('click', (e) => {
     if (toDoInput.value) {
         const toDo = {
@@ -64,5 +55,8 @@ addToDo.addEventListener('click', (e) => {
         toDoList.push(toDo);
         addToDoToList(toDo);
         toDoInput.value = '';
+        saveToDos();
     }
 });
+
+getToDos();
