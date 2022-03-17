@@ -42,6 +42,22 @@ function addToDoToList(toDo) {
     titleWidget.innerHTML = toDo.title;
     toDoWidget.appendChild(titleWidget);
 
+    const editWidget = document.createElement('img');
+    editWidget.classList.add(['edit-icon']);
+    editWidget.src = '../assets/icons/edit.svg';
+    editWidget.addEventListener('click', () => {
+        console.log(`Edit ${toDo.id}: ${toDo.title}`);
+    });
+    toDoWidget.appendChild(editWidget);
+
+    toDoWidget.addEventListener('mouseover', (e) => {
+        editWidget.style.display = 'inline';
+    })
+
+    toDoWidget.addEventListener('mouseout', (e) => {
+        editWidget.style.display = 'none';
+    })
+
     toDoListWidget.appendChild(toDoWidget);
 }
 

@@ -2,8 +2,63 @@
 
 body {
     font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+#sidebar {
+    width: 34%;
+    background-color: darkkhaki;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#sidebar img {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+#to-dos {
+    width: 65%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+
+.to-do {
+    padding: 4px;
+    display: flex;
 }
 
 img.status {
     width: 20px;
+}
+
+img.edit-icon {
+    width: 12px;
+    color: whitesmoke;
+    display: none;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #F06060;
+}
+
+::selection {
+    color: white;
+    background: #7E8C4C;
 }

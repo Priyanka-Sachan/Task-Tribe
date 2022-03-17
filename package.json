@@ -16,5 +16,9 @@
     "devDependencies": {
         "electron": "^17.1.2",
         "nodemon": "^2.0.15"
+    },
+    "dependencies": {
+        "bulma": "^0.9.3",
+        "install": "^0.13.0"
     }
 }
