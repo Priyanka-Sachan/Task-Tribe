@@ -37,28 +37,38 @@ function addToDoToList(toDo) {
     });
     toDoWidget.appendChild(statusWidget);
 
-    const titleWidget = document.createElement('span');
+    const titleWidget = document.createElement('textarea');
     titleWidget.classList.add(['title']);
-    titleWidget.innerHTML = toDo.title;
+    titleWidget.setAttribute('type', 'text')
+    titleWidget.setAttribute('disabled', 'true')
+    titleWidget.value = toDo.title;
+    titleWidget.addEventListener('keypress', (e, key) => {
+        const target = e.target;
+        if (e.which == 13) {
+            const id = toDo.id;
+            const index = toDoList.findIndex((td) => td.id == id);
+            if (index != -1) {
+                toDoList[index].title = target.value;
+                target.setAttribute('disabled', 'true')
+                saveToDos();
+            }
+        }
+    });
     toDoWidget.appendChild(titleWidget);
 
-    const editWidget = document.createElement('img');
-    editWidget.classList.add(['edit-icon']);
-    editWidget.src = '../assets/icons/edit.svg';
-    editWidget.addEventListener('click', () => {
-        console.log(`Edit ${toDo.id}: ${toDo.title}`);
-    });
-    toDoWidget.appendChild(editWidget);
-
     toDoWidget.addEventListener('mouseover', (e) => {
-        editWidget.style.display = 'inline';
+        const id = toDo.id;
+        document.querySelector(`#to-do-list [id='${id}'] .title`).removeAttribute('disabled')
     })
 
     toDoWidget.addEventListener('mouseout', (e) => {
-        editWidget.style.display = 'none';
+        const id = toDo.id;
+        document.querySelector(`#to-do-list [id='${id}'] .title`).setAttribute('disabled', 'true')
     })
 
     toDoListWidget.appendChild(toDoWidget);
+    autosize(document.querySelectorAll('textarea'));
+    autosize.update(document.querySelectorAll('textarea'));
 }
 
 addToDo.addEventListener('click', (e) => {
@@ -76,3 +86,5 @@ addToDo.addEventListener('click', (e) => {
 });
 
 getToDos();
+autosize(document.querySelectorAll('textarea'));
+autosize.update(document.querySelectorAll('textarea'));
